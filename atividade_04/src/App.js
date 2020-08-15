@@ -34,7 +34,7 @@ export default class App extends Component {
           <h2>Projeto Crud</h2><br></br>
           <Switch>
             <Route path = '/create' component = {Create} />
-            <Route path = '/edit/:id' component = {Edit} />
+            <Route path = '/edit' component = {Edit} />
             <Route path = '/list' component = {List} />
             <Route exact path = '/' component = {Home} />
           </Switch>

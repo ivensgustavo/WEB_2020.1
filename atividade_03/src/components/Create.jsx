@@ -39,7 +39,7 @@ export default class Create extends Component {
       const novaDisciplina = {
         nome: this.state.nome,
         curso: this.state.curso,
-        capaciade: this.state.capacidade
+        capacidade: this.state.capacidade
       }
     
       axios.post('http://localhost:3002/disciplinas', novaDisciplina)

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 
-export default class Edit extends Component {
+export default class Create extends Component {
 
   constructor(props){
     super(props)
@@ -11,28 +11,10 @@ export default class Edit extends Component {
     this.setNome = this.setNome.bind(this);
     this.setCurso = this.setCurso.bind(this);
     this.setCapacidade = this.setCapacidade.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
 
-  componentDidMount(){
-    axios.get(`http://localhost:3002/disciplinas/${this.props.match.params.id}`)
-    .then(
-      (response) => {
 
-        const disciplina = response.data;
-
-        this.setState({
-          nome: disciplina.nome,
-          curso: disciplina.curso,
-          capacidade: disciplina.capacidade
-        });
-    })
-    .catch(
-        (error) => {
-          console.log(error);
-        }
-    )
     
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   setNome(e){
@@ -49,18 +31,21 @@ export default class Edit extends Component {
 
   onSubmit(e){
     e.preventDefault();
+    /*console.log(
+      'Nome: ' + this.state.nome + '\n' + 
+      'Curso: ' + this.state.curso + '\n' +
+      'Capacidade: ' + this.state.capacidade);*/
 
-    const disciplinaEditada = {
-       nome: this.state.nome,
-       curso: this.state.curso,
-       capacidade: this.state.capacidade
-     }
+      const novaDisciplina = {
+        nome: this.state.nome,
+        curso: this.state.curso,
+        capaciade: this.state.capacidade
+      }
     
-    axios.put(`http://localhost:3002/disciplinas/${this.props.match.params.id}`, 
-                disciplinaEditada)
+      axios.post('http://localhost:3002/disciplinas', novaDisciplina)
       .then(
         (response) => {
-          this.props.history.push('/list');
+          console.log('Disciplina '+response.data.nome+' adicionada com sucesso.')
       })
       .catch(
         (error) => {
@@ -74,7 +59,7 @@ export default class Edit extends Component {
   render(){
     return (
       <div>
-        <h3>Editar Disciplina</h3>
+        <h3>Criar Disciplina</h3>
 
         <form onSubmit = {this.onSubmit}>
 
@@ -104,7 +89,7 @@ export default class Edit extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Editar Disciplina" className="btn btn-primary"/>
+            <input type="submit" value="Criar Disciplina" className="btn btn-primary"/>
           </div>
 
         </form>

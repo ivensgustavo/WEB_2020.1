@@ -1,27 +1,27 @@
 {
   "disciplinas": [
     {
-      "id": 1,
-      "nome": "Projeto e Análise de Algoritmos",
-      "Curso": "Engenharia de Software",
-      "Capacidade": 25
-    },
-    {
-      "id": 2,
       "nome": "Requisitos de Software",
-      "Curso": "Engenharia de Software",
-      "Capacidade": 50
+      "curso": "Engenharia de Software",
+      "capacidade": "50",
+      "id": 1
     },
     {
       "nome": "Processos de Software",
       "curso": "Engenharia de Software",
-      "capaciade": "40",
+      "capacidade": "32",
+      "id": 2
+    },
+    {
+      "nome": "Reúso de Software",
+      "curso": "Engenharia de Software",
+      "capacidade": "25",
       "id": 3
     },
     {
-      "nome": "Desafios de Programação",
+      "nome": "Teoria da Computação",
       "curso": "Ciência da Computação",
-      "capaciade": "20",
+      "capacidade": "42",
       "id": 4
     }
   ]
