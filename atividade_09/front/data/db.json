@@ -1,0 +1,28 @@
+{
+  "disciplinas": [
+    {
+      "nome": "Requisitos de Software",
+      "curso": "Engenharia de Software",
+      "capacidade": "50",
+      "id": 1
+    },
+    {
+      "nome": "Processos de Software",
+      "curso": "Engenharia de Software",
+      "capacidade": "32",
+      "id": 2
+    },
+    {
+      "nome": "Reúso de Software",
+      "curso": "Engenharia de Software",
+      "capacidade": "25",
+      "id": 3
+    },
+    {
+      "nome": "Teoria da Computação",
+      "curso": "Ciência da Computação",
+      "capacidade": "42",
+      "id": 4
+    }
+  ]
+}
