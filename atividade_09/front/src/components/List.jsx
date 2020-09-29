@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-
 import TableHow from './TableRow';
-
 import FirebaseContext from '../utils/FirebaseContext';
+import DisciplinaService from '../services/DisciplinaService';
 
 //Passando o contexto(instância única do firebase) para a classe list
 const ListPage = () => {
-  
   return <FirebaseContext.Consumer>
     {
       (context) => <List firebase = {context}/>
@@ -23,29 +21,18 @@ export class List extends Component {
     this.apagarDisciplinaPorId = this.apagarDisciplinaPorId.bind(this);
   }
 
-  //Pegar as disciplinas cadastradas no firebase
-  buscarDisciplinas(query){
-    let disciplinas = [];
-    query.forEach((documento) => {
-      const {nome, curso, capacidade} = documento.data();
-      disciplinas.push({
-        _id: documento.id,
-        nome,
-        curso,
-        capacidade
-      });
-    });
-
-    if(this._isMounted) this.setState({disciplinas: disciplinas});
-  }
-
   //Assim que a página carregar pegue a instância do firebase e acesse a coleção
   //disciplinas. Se outra aplicação alterar o banco ocorre atualização aqui também(onSnapShot)
   componentDidMount(){
     this._isMounted = true;
 
-    this.refFirebase = this.props.firebase.getFirestore().collection('disciplinas');
-    this.refFirebase.onSnapshot(this.buscarDisciplinas.bind(this));
+    DisciplinaService.list(this.props.firebase, 
+      //recebo aquilo de que dependo
+      (disciplinas) => {
+        if(disciplinas){
+          if(this._isMounted) this.setState({disciplinas: disciplinas})
+        } 
+      })
   }
 
   componentWillUnmount(){
@@ -59,7 +46,7 @@ export class List extends Component {
       return <TableHow disciplina = {disciplina} 
               key = {disciplina._id} 
               apagarDisciplinaPorId = {this.apagarDisciplinaPorId}
-              refFirebase = {this.refFirebase}/>;
+              firebase = {this.props.firebase}/>;
     })
   }
 

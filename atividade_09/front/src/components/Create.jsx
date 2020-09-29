@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-
 import FirebaseContext from '../utils/FirebaseContext';
+import DisciplinaService from '../services/DisciplinaService';
 
 //Passando o contexto(instância única do firebase) para a classe Create
 const CreatePage = () => {
@@ -16,15 +16,11 @@ class Create extends Component {
 
   constructor(props){
     super(props)
-
     this.state = {nome: '', curso: '', capacidade: ''};
 
     this.setNome = this.setNome.bind(this);
     this.setCurso = this.setCurso.bind(this);
     this.setCapacidade = this.setCapacidade.bind(this);
-
-
-    
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -42,24 +38,21 @@ class Create extends Component {
 
   onSubmit(e){
     e.preventDefault();
-      const {nome, curso, capacidade} = this.state;
-    
-      const refFirebase = this.props.firebase.getFirestore().collection('disciplinas');
 
-      refFirebase.add({
-        nome,
-        curso,
-        capacidade
-      })
-      .then(
-        (response) => {
-          console.log('Disciplina '+nome+' adicionada com sucesso.')
-      })
-      .catch(
-        (error) => {
-          console.log(error);
-        }
-      )
+      const disciplina = {
+        nome: this.state.nome,
+        curso: this.state.curso,
+        capacidade: this.state.capacidade
+      }
+    
+     DisciplinaService.create(
+       this.props.firebase,
+       disciplina,
+       (res) => {
+         if(res)
+          console.log('Disciplina '+disciplina.nome+' adicionada com sucesso.')
+       }
+     );
     
     this.setState({nome: '', curso: '', capacidade: ''})
   }

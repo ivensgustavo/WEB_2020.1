@@ -1,5 +1,6 @@
 import React, { Component } from 'react' 
 import { Link } from 'react-router-dom';
+import DisciplinaService from '../services/DisciplinaService';
 
 export default class TableRow extends Component {
 
@@ -13,15 +14,13 @@ export default class TableRow extends Component {
     const res = window.confirm(`Deseja realmente apagar ${nome}?`);
 
     if(res){
-      const refFirebase = this.props.refFirebase;
-      
-      refFirebase.doc(id).delete()
-      .then(() =>{
-        console.log(`Disciplina ${nome} apagada`);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+      DisciplinaService.delete(
+        this.props.firebase,
+        id,
+        (ok) => {
+          if(ok) console.log(`Disciplina ${nome} apagada`);
+        }
+      );
     } 
 
   }

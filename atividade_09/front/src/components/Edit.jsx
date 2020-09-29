@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
 import FirebaseContext from '../utils/FirebaseContext';
+import DisciplinaService from '../services/DisciplinaService';
 
 //Passando o contexto(instância única do firebase) para a classe Create
 //e o id da disciplina
@@ -17,7 +17,6 @@ class Edit extends Component {
 
   constructor(props){
     super(props)
-
     this.state = {nome: '', curso: '', capacidade: ''};
 
     this.setNome = this.setNome.bind(this);
@@ -27,25 +26,19 @@ class Edit extends Component {
   }
 
   componentDidMount(){
-    const refFirebase = this.props.firebase.getFirestore().collection('disciplinas');
-    
-    refFirebase.doc(this.props.id).get()
-    .then(
-      (documento) => {
-        const {nome, curso, capacidade} = documento.data();
-
-        this.setState({
-          nome: nome,
-          curso: curso,
-          capacidade: capacidade
-        });
-    })
-    .catch(
-        (error) => {
-          console.log(error);
+    DisciplinaService.retrieve(
+      this.props.firebase,
+      this.props.id,
+      (disciplina) => {
+        if(disciplina){
+          this.setState({
+            nome: disciplina.nome,
+            curso: disciplina.curso,
+            capacidade: disciplina.capacidade
+          });
         }
-    )
-    
+      }
+    );
   }
 
   setNome(e){
@@ -69,18 +62,15 @@ class Edit extends Component {
        capacidade: this.state.capacidade
      }
 
-    const refFirebase = this.props.firebase.getFirestore().collection('disciplinas');
-    
-    refFirebase.doc(this.props.id).set(disciplinaEditada)
-      .then(
-        (documento) => {
-         console.log(`Disciplina ${this.state.nome} atualizada com sucesso.`)
-      })
-      .catch(
-        (error) => {
-          console.log(error);
-        }
-      )
+    DisciplinaService.update(
+      this.props.firebase,
+      this.props.id,
+      disciplinaEditada,
+      (res) => {
+        if(res) 
+          console.log(`Disciplina ${disciplinaEditada.nome} atualizada com sucesso.`)
+      }
+    )
     
     this.setState({nome: '', curso: '', capacidade: ''})
   }
