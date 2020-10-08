@@ -1,0 +1,11 @@
+
+.container_numeros {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.card input {
+  text-align: center;
+}

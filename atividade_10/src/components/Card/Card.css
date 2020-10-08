@@ -1,0 +1,8 @@
+.card {
+  margin: 3px;
+  width: 250px;
+}
+
+.card-header {
+  font-weight: bold;
+}
