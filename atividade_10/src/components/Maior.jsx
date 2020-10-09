@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 
+import { connect } from 'react-redux';
+
 import Card from './Card';
 
-export default class Maior extends Component {
+class Maior extends Component {
 
   getMaior(){
+
     return this.props.numeros.numero1 > this.props.numeros.numero2 
       ? this.props.numeros.numero1 
       : this.props.numeros.numero2;
@@ -18,3 +21,9 @@ export default class Maior extends Component {
     )
   }
 }
+
+export default connect((state) => {
+  return {
+    numeros: state
+  }
+})(Maior);

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 
+import { connect } from 'react-redux';
+
 import Card from './Card';
 
-export default class Soma extends Component {
+class Soma extends Component {
 
   render(){
     return (
@@ -12,3 +14,9 @@ export default class Soma extends Component {
     )
   }
 }
+
+export default connect((state) => {
+  return {
+    numeros: state
+  }
+})(Soma);
